@@ -1,0 +1,182 @@
+.menu {
+    background: gray;
+}
+
+.menu .bar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.menu .bar li {
+    float: left;
+}
+
+.menu .bar li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.menu .bar li a:hover {
+    background-color: #111;
+}
+
+.menu .bar .active {
+    background-color: green;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: #000 url("img/1.jpg") center center fixed no-repeat;
+    background-size: cover;
+}
+
+div.preview {
+    /*border: 5px solid;*/
+    text-align: center;
+}
+
+div.row {
+    width: 80%;
+    text-align: center;
+    display: inline-block;
+    /*border: 3px dashed;*/
+}
+
+div.preview div.row span {
+    width: 100%;
+    margin: 0 0 0 0;
+    display: inline-block;
+    overflow: hidden;
+    /*border: 1px dotted;*/
+}
+
+div.preview div.row {
+    text-align: center;
+    display: inline;
+}
+
+.imgwrap {
+    width: 24%;
+    height: inherit;
+    margin: inherit;
+    vertical-align: middle;
+    display: inline-block;
+    position: relative;
+    border: 3px solid;
+}
+
+.appear {
+    position: absolute;
+    font-style: italic;
+    padding: 0;
+    margin: 0 0px 22px 0px;
+    top: 0px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #ffffff;
+    color: #000000;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.8s;
+}
+
+.imgwrap:hover .appear {
+    visibility: visible;
+    opacity: 0.6;
+}
+
+div.preview div.x1 div.imgwrap:hover img {
+    transform: scale(1.2);
+    opacity: 0.6;
+}
+
+div.preview div.x1 div.imgwrap img {
+    transition: 0.8s ease-in-out;
+}
+
+div.preview div.x2 div.imgwrap:hover img {
+    transform: scale(0.8);
+    opacity: 0.6;
+}
+
+div.preview div.x2 div.imgwrap img {
+    transition: 0.8s ease-in-out;
+}
+
+div.preview div.x3 div.imgwrap:hover img {
+    transform: rotate(20deg) scale(1.5);
+    opacity: 0.6;
+}
+
+div.preview div.x3 div.imgwrap img {
+    transition: 0.8s ease-in-out;
+}
+
+div.preview div.x4 div.imgwrap:hover img {
+    transform: rotate(-20deg) scale(1.5);
+    opacity: 0.6;
+}
+
+div.preview div.x4 div.imgwrap img {
+    transition: 0.8s ease-in-out;
+}
+
+div.preview div.x5 div.imgwrap:hover img {
+    transform: skew(20deg) scale(1.5);
+    opacity: 0.6;
+}
+
+div.preview div.x5 div.imgwrap img {
+    transition: 0.8s ease-in-out;
+}
+
+.text {
+    position: relative;
+    background: #eeeeee;
+    margin: 0;
+    padding: 0;
+}
+
+a:link {
+    color: #ff6633;
+    text-decoration: none;
+    transition: 0.5s ease-in-out;
+}
+
+a:visited {
+    color: #666633;
+}
+
+a:hover {
+    color: #cc9900;
+}
+
+a::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #000000;
+    visibility: hidden;
+    transform: scaleX(0);
+    transition: all 0.4s ease-in-out 0s;
+}
+
+a:hover::before {
+    visibility: visible;
+    transform: scaleX(1);
+}
