@@ -16,12 +16,20 @@ $questionPlace=array();
 $questionObject=array();
 $questionEvent=array();
 $info=array();
+
+$info['event']=new array();
+$info['time']=new array();
+$info['place']=new array();
+$info['obj']=new array();
+
 $info=$_SESSION['questionInfo'];
 $questionTime['amount']=0;
 $questionEvent['amount']=0;
 $questionObject['amount']=0;
 $questionPlace['amount']=0;
 $info['amount']=0;
+$info=$_SESSION['questionInfo'];
+
 
 $now=count($_SESSION['record']); 
 
