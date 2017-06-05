@@ -49,6 +49,16 @@ $ans='';
 
 if(($eventNum+$objNum+$placeNum+$timeNum)==0)
   firstInfoAcquire($sentence,$info);
+
+if($info["nowState"]=="waitTime") timeAcquire($sentence,$ans,$info);
+else if($info["nowState"]=="waitPlace") placeAcquire($sentence,$ans,$info);
+else if($info["nowState"]=="waitObj") objAcquire($sentence,$ans,$info);
+else if($info["nowState"]=="waitEvent") EventAcquire($sentence,$ans,$info);
+
+
+
+
+
 if($eventNum<=0||$placeNum<=0||$objNum<=0||$timeNum<=0){
 
   while(1){
@@ -72,7 +82,7 @@ for($i=0;$i<$info['objNum'];$i++)     $_SESSION['obj'][$i]=$info['obj'][$i];
 for($i=0;$i<$info['placeNum'];$i++)   $_SESSION['place'][$i]=$info['place'][$i];
 for($i=0;$i<$info['timeNum'];$i++)    $_SESSION['time'][$i]=$info['time'][$i];
 
-
+$_SESSION["nowState"]==$info["nowState"];
 
 
 
