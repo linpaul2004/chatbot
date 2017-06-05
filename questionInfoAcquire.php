@@ -7,10 +7,10 @@ function firstInfoAcquire($input,&$info){
 	$info['place'][0]=getPlace($input);
 	$info['event'][0]=getEvent($input);
 
-	if(!($info['time'][0]==""))$info["timeNum"]++;
-	if(!($info['obj'][0]==""))$info["objNum"]++;
-	if(!($info['place'][0]==""))$info["placeNum"]++;
-	if(!($info['event'][0]==""))$info["eventNum"]++;
+	if(!($info['time'][0]!=""))$info["timeNum"]++;
+	if(!($info['obj'][0]!=""))$info["objNum"]++;
+	if(!($info['place'][0]!=""))$info["placeNum"]++;
+	if(!($info['event'][0]!=""))$info["eventNum"]++;
 
 return 1;
 }
@@ -19,12 +19,13 @@ function timeAcquire($input,&$ans,&$info){
 	
 	if($info["nowState"]=="waitTime"){
 		$info["time"][0]=getTime($input);
-        $info['timenum']++;
+        if($info["time"][0]!="")$info['timeNum']++;
+        $info["nowState"]="";
 		return 1;
 	}
 	if($info["timeNum"]==0){
 	 $ans="請問您說的時間點是甚麼時候?";
-	 	$info["status"]="waitReplay";
+	 	$info["nowState"]="waitTime";
 		return 0;
 	}
 	else return 1;
@@ -35,12 +36,13 @@ function placeAcquire($input,&$ans,&$info){
 	
 	if($info["nowState"]=="waitPlace"){
 		$info["place"][0]=getPlace($input);
-	    $info['placenum']++;
+	    if($info["place"][0]!="")$info['placeNum']++;
+	    $info["nowState"]="";
 		return 1;
 	}
 	if($info["placeNum"]==0){
 	 $ans="請問您說的地點是哪裡?";
-	 $info["status"]="waitReplay";
+	 $info["nowState"]="waitPlace";
 		return 0;
 	}
 		else return 1;
@@ -51,12 +53,13 @@ function eventAcquire($input,&$ans,&$info){
 	
 	if($info["nowState"]=="waitEvent"){
 		$info["event"][0]=getEvent($input);
-        $info['eventnum']++;
+        if($info["event"][0]!="")$info['eventNum']++;
+        $info["nowState"]="";
 		return 1;
 	}
 	if($info["eventNum"]==0){
 	 $ans="請問您是發生了甚麼事?";
-	 $info["status"]="waitReplay";
+	 $info["nowState"]="waitEvent";
 		return 0;
 	}
 	else return 1;
@@ -66,13 +69,14 @@ function objectAcquire($input,&$ans,&$info){
 	
    if($info["nowState"]=="waitObj"){
 		$info["obj"][0]=getObj($input);
-        $info['objnum']++;
+        if($info["obj"][0]!="")$info['objNum']++;
+        $info["nowState"]="";
 		return 1;
 	}
 
 	if($info["objNum"]==0){
 	 $ans="請問您說的他是誰?";
-	 $info["status"]="waitReplay";
+	 $info["nowState"]="waitObj";
 		return 0;
 	}
 		else return 1;
