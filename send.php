@@ -12,7 +12,6 @@ mysqli_query($link,"SET NAMES UTF8");
 if(isset($_SESSION['record'])==false){
   $_SESSION['record']=array();
 }
-
 $sentence=urldecode($_POST['string']);
 $response="error";
 
@@ -184,11 +183,12 @@ if($sentence=="你好" ){
 $now=count($_SESSION['record']); 
 $_SESSION['record'][$now]=$sentence;
 $_SESSION['record'][$now+1]=$response;
-for($i=count($_SESSION['record'])-1;$i>=0;$i--){
+echo("<h1>\n<div class=\"send\">\n你好，我是感情諮詢ChatBot，<br>請問你想要問什麼？</div></h1>");
+for($i=0;$i<count($_SESSION['record']);$i++){
   if($i%2==1){
-    echo("<div class=\"row\">\n<div class=\"right\"><span class=\"teal\" style=\"font-family:微軟正黑體;font-size:24px\">".$_SESSION['record'][$i]."</span></div>\n</div>");
+    echo("<h1>\n<div class=\"send\">\n".$_SESSION['record'][$i]."</div></h1>");
   }else{
-    echo("<div class=\"row\">\n<div class=\"left\"><span class=\"blue\" style=\"font-family:微軟正黑體;font-size:24px\">".$_SESSION['record'][$i]."</span></div>\n</div>");
+    echo("<h2>\n<div class=\"user\">\n".$_SESSION['record'][$i]."</div></h2>");
   }
 }
 $response=rawurlencode($response);

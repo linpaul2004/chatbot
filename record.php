@@ -57,7 +57,7 @@
                     echo "<tr>\n";
                     echo "\t<td>".$i."</td>\n";
                     echo "\t<td>".$rows[0]."</td>\n";
-                    echo "\t<td>".$rows[1]."</td>\n";
+                    echo "\t<td>".urldecode($rows[1])."</td>\n";
                     echo "\t<td>".$rows[2]."</td>\n</tr>\n";
                     $i=$i+1;
                     $rows=mysqli_fetch_array($result);

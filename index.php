@@ -6,6 +6,7 @@
     <!--<link rel="stylesheet" href="style/index.css" type="text/css">-->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="css/chatscreen.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>感情諮詢機器人</title>
     <?php
@@ -31,33 +32,46 @@
         echo('<div class="row"><div class="col s12"><div class="card blue-grey darken-1"><div class="card-content white-text"><span class="card-title">注意：您現在沒有登入，對話不會被記錄。</span></div></div></div></div>');
     }
     ?>
-    <div class="row">
+    <!--<div class="row">
         <div class="col s12">
             <div class="input-field inline col s8">
                 <input id="send_string" type="text" onkeypress="click_send(event)">
-                <label for="send_string"><?php if(isset($_SESSION['account'])){ echo($_SESSION['account']); }else{ echo("訪客"); } ?>：</label>
+                <label for="send_string"><?php /*if(isset($_SESSION['account'])){ echo($_SESSION['account']); }else{ echo("訪客"); }*/ ?>：</label>
             </div>
             <button type="button" class="indigo btn waves-effect waves-light" onclick="send()"><i class="material-icons center">send</i></button>
         </div>
-    </div>
-    <div class="row">
-        <div id="talking" class="col s12">
-        <?php
-        if(isset($_SESSION['record'])){
-            for($i=count($_SESSION['record'])-1;$i>=0;$i--){
-                if($i%2==1){
-                    echo("<div class=\"row\">\n<div class=\"right\"><span class=\"teal\" style=\"font-family:微軟正黑體;font-size:24px\">".$_SESSION['record'][$i]."</span></div>\n</div>");
-                }else{
-                    echo("<div class=\"row\">\n<div class=\"left\"><span class=\"blue\" style=\"font-family:微軟正黑體;font-size:24px\">".$_SESSION['record'][$i]."</span></div>\n</div>");
+    </div>-->
+    <center>
+    <div class="main">
+    		<div id="content" style="width:100%;overflow:auto;height:100%">
+                <h1>
+                <div class="send">
+                你好，我是感情諮詢ChatBot，<br>請問你想要問什麼？
+                </div>
+                </h1>
+                <?php
+                if(isset($_SESSION['record'])){
+                    for($i=0;$i<count($_SESSION['record']);$i++){
+                        if($i%2==1){
+                            echo("<h1>\n<div class=\"send\">\n".$_SESSION['record'][$i]."</div></h1>");
+                        }else{
+                            echo("<h2>\n<div class=\"user\">\n".$_SESSION['record'][$i]."</div></h2>");
+                        }
+                    }
                 }
-            }
-        }
-        ?>
-        </div>
+                ?>
+            </div>
+            <div id="footer">
+                <table style="bottom:0px">
+                <tbody><tr>
+                <td><textarea rows="1" class="m" id="msg" onkeypress="click_send(event)"></textarea></td>
+                <td style="padding:0px 0px;"><button style="width:130%;" id="input_btn" class="btn" onclick="send()">發送</button></td>
+                </tr>
+                </tbody></table>
+            </div>
     </div>
-    <div class="row">
-        <div class="right"><span class="teal" style="font-family:微軟正黑體;font-size:24px">你好，有什麼想問的嗎？</span></div>
-    </div>
+<br>
+    </center>
     <script>
     function click_send(e) {
         if (e.keyCode === 13) {
@@ -66,7 +80,8 @@
     }
     function send() {
         var oXHR = new XMLHttpRequest();
-        var sstring = document.getElementById("send_string").value;
+        var sstring = document.getElementById("msg").value;
+        sstring=sstring.replace(/\n/g,'');
         if (sstring) {
             para = "string=" + encodeURIComponent(sstring);
             oXHR.open("POST", "send.php", true);
@@ -74,15 +89,14 @@
             oXHR.onreadystatechange = function() {
                 if (oXHR.readyState == 4 && oXHR.status == 200) {
                     if (oXHR.responseText != "Error") {
-                        document.getElementById("talking").innerHTML = oXHR.responseText;
+                        document.getElementById("content").innerHTML = oXHR.responseText;
+                        document.getElementById('content').scrollTop = document.getElementById('content').scrollHeight;
                     }
                 }
             }
             oXHR.send(para);
-        } else {
-            document.getElementById("talking").innerHTML = "";
         }
-        document.getElementById("send_string").value="";
+        document.getElementById("msg").value='';
     }
     </script>
 </body>
