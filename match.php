@@ -7,7 +7,7 @@ function match($ans,$info){
 	$result=mysqli_query($link,$query);
 	if($result){
 		$result=mysqli_fetch_array($result);
-		return "匹配到的網址：<br>".$rows[0];
+		return "匹配到的網址：<br>".$result[0];
 	}else{
 		return "抱歉，我還無法解決您的問題";
 	}
