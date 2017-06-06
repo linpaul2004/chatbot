@@ -10,11 +10,13 @@ $time = $date->format('H:i:s');
 mysqli_query($link,"SET NAMES UTF8");
 //include_once "questionInfoAcquire.php"
 if(isset($_SESSION['record'])==false){
-    $_SESSION['record']=array();
+  $_SESSION['record']=array();
 }
 
 $sentence=urldecode($_POST['string']);
-$response="hello";
+$response="error";
+
+
 
 
 ///////data load
@@ -32,64 +34,93 @@ $timeNum=0;
 $placeNum=0;
 $objNum=0;
 
-if(isset($_SESSION['eventNum']))       $eventNum=$_SESSION['eventNum'];
-if(isset($_SESSION['timeNum']))        $timeNum=$_SESSION['timeNum'];
-if(isset($_SESSION['placeNum']))       $placeNum=$_SESSION['placeNum'];
-if(isset($_SESSION['objNum']))         $objNum=$_SESSION['objNum'];
-if(isset($_SESSION['nowState']))       $info['nowState']=$_SESSION['nowState'];
+if(isset($_SESSION['eventNum'])){       $eventNum=$_SESSION['eventNum'];}
+if(isset($_SESSION['timeNum'])){        $timeNum=$_SESSION['timeNum'];}
+if(isset($_SESSION['placeNum'])){       $placeNum=$_SESSION['placeNum'];}
+if(isset($_SESSION['objNum'])){         $objNum=$_SESSION['objNum'];}
+if(isset($_SESSION['nowState'])){       $info['nowState']=$_SESSION['nowState'];}
 //if(isset($_SESSION['infoStackNum']))  $info['infoStackNum']=$_SESSION['infoStackNum'];
 
-for($i=0;$i<$eventNum;$i++)            $info['event'][$i]=$_SESSION['event'][$i];
-for($i=0;$i<$objNum;$i++)              $info['obj'][$i]=$_SESSION['obj'][$i];
-for($i=0;$i<$timeNum;$i++)             $info['time'][$i]=$_SESSION['time'][$i];
-for($i=0;$i<$placeNum;$i++)            $info['place'][$i]=$_SESSION['place'][$i];
+for($i=0;$i<$eventNum;$i++){            $info['event'][$i]=$_SESSION['event'][$i];}
+for($i=0;$i<$objNum;$i++){              $info['obj'][$i]=$_SESSION['obj'][$i];}
+for($i=0;$i<$timeNum;$i++){             $info['time'][$i]=$_SESSION['time'][$i];}
+for($i=0;$i<$placeNum;$i++){            $info['place'][$i]=$_SESSION['place'][$i];}
 //for($i=0;$i<$info["infoStackNum"];$i++)$info['infoStack'][$i]=$_SESSION['infoStack'][$i];
 
 $info['eventNum']=$eventNum;
 $info['timeNum']=$timeNum;
 $info['placeNum']=$placeNum;
 $info['objNum']=$objNum;
-$ans='error';
+$ans='error ans';
 
 //////start analyize
-
-if(($eventNum+$objNum+$placeNum+$timeNum)==0)
+//echo "sum".($eventNum+$objNum+$placeNum+$timeNum). ' ';
+//echoseg($sentence);
+if(($eventNum+$objNum+$placeNum+$timeNum)==0){
   firstInfoAcquire($sentence,$info);
+}
 
-if($info["nowState"]=="waitTime") timeAcquire($sentence,$ans,$info);
-else if($info["nowState"]=="waitPlace") placeAcquire($sentence,$ans,$info);
-else if($info["nowState"]=="waitObj") objAcquire($sentence,$ans,$info);
-else if($info["nowState"]=="waitEvent") EventAcquire($sentence,$ans,$info);
-
-// echo "en: ".$eventNum;
-// echo "pn: ".$placeNum;
-// echo "on: ".$objNum;
-// echo "tn: ".$timeNum;
+// echo "en1: ".$info['eventNum'].",";
+// echo "pn1: ".$info['placeNum'].",";
+// echo "on1: ".$info['objNum'].",";
+// echo "tn1: ".$info['timeNum'].",";
 
 
-if($eventNum<=0||$placeNum<=0||$objNum<=0||$timeNum<=0){
-  $temok[0]=0;
-  $temok[1]=0;
-  $temok[2]=0;
-  $temok[3]=0;
-  
+if($info["nowState"]=="waitTime"){ timeAcquire($sentence,$ans,$info);}
+else if($info["nowState"]=="waitPlace"){ placeAcquire($sentence,$ans,$info);}
+else if($info["nowState"]=="waitObj"){ objectAcquire($sentence,$ans,$info);}
+else if($info["nowState"]=="waitEvent"){ EventAcquire($sentence,$ans,$info);}
+
+// echo "en2: ".$info['eventNum'].",";
+// echo "pn2: ".$info['placeNum'].",";
+// echo "on2: ".$info['objNum'].",";
+// echo "tn2: ".$info['timeNum'].",";
+
+if(($info['eventNum']<=0)||($info['placeNum']<=0)||($info['objNum']<=0)||($info['timeNum']<=0)){
+  $temOk[0]=0;
+  $temOk[1]=0;
+  $temOk[2]=0;
+  $temOk[3]=0;
+
   while(1){
-  $tem=rand(0,3);
-  //echo $tem;
-    if(($temok[0]+$temok[1]+$temok[2]+$temok[3])>=4)break;
-    if($tem==0)      if(timeAcquire($sentence,$ans,$info)==0) break;  
-    else if ($tem==1)if(placeAcquire($sentence,$ans,$info)==0) break;
-    else if ($tem==2)if(eventAcquire($sentence,$ans,$info)==0) break;
-    else if ($tem==3)if(objectAcquire($sentence,$ans,$info)==0)break;
+    $tem=rand(0,3);
+//echo 'a'.$tem.' ;';
+    if(($temOk[0]+$temOk[1]+$temOk[2]+$temOk[3])>=4){
+      break;
+    }
+    if($temOk[$tem]==1){
+      continue;
+    }
+    if($tem==0){
+      if(timeAcquire($sentence,$ans,$info)==0){
+        break;
+      }
+    }  
+    else if ($tem==1){
+      if(placeAcquire($sentence,$ans,$info)==0){ 
+       break;
+      }
+    }
+    else if ($tem==2){
+      if(eventAcquire($sentence,$ans,$info)==0) {
+        break;
+      }
+    }
+    else if ($tem==3){
+      if(objectAcquire($sentence,$ans,$info)==0){
+        break;
+      }
+    }
     $temok[$tem]=1;
+ //   echo $tem;
   }
   $response=$ans;
 }
 
-// echo "en1: ".$eventNum;
-// echo "pn1: ".$placeNum;
-// echo "on1: ".$objNum;
-// echo "tn1: ".$timeNum;
+// echo "en: ".$info['eventNum']."\n";
+// echo "pn: ".$info['placeNum']."\n";
+// echo "on: ".$info['objNum']."\n";
+// echo "tn: ".$info['timeNum']."\n";
 $info["infoStackNum"]=$info['timeNum']+$info['eventNum']+$info['placeNum']+$info['objNum'];
 //data store
 
@@ -100,16 +131,25 @@ $_SESSION['placeNum']=$info['placeNum'];
 $_SESSION['timeNum']=$info['timeNum'];
 //$_SESSION["infoStackNum"]=$info["infoStackNum"];
 
-for($i=0;$i<$info['eventNum'];$i++)   $_SESSION['event'][$i]=$info['event'][$i];
-for($i=0;$i<$info['objNum'];$i++)     $_SESSION['obj'][$i]=$info['obj'][$i];
-for($i=0;$i<$info['placeNum'];$i++)   $_SESSION['place'][$i]=$info['place'][$i];
-for($i=0;$i<$info['timeNum'];$i++)    $_SESSION['time'][$i]=$info['time'][$i];
+for($i=0;$i<$info['eventNum'];$i++)  { $_SESSION['event'][$i]=$info['event'][$i];}
+for($i=0;$i<$info['objNum'];$i++)    { $_SESSION['obj'][$i]=$info['obj'][$i];}
+for($i=0;$i<$info['placeNum'];$i++)  { $_SESSION['place'][$i]=$info['place'][$i];}
+for($i=0;$i<$info['timeNum'];$i++)   { $_SESSION['time'][$i]=$info['time'][$i];}
 //for($i=0;$i<$info["infoStackNum"];$i++)$_SESSION['infoStack'][$i]=$info['infoStack'][$i];
-$_SESSION["nowState"]=$info['nowState'];
+  $_SESSION["nowState"]=$info['nowState'];
 
-if(!($eventNum<=0||$placeNum<=0||$objNum<=0||$timeNum<=0))$response=match($ans,$info);
+if(!(($info['eventNum']<=0)||($info['placeNum']<=0)||($info['objNum']<=0)||($info['timeNum']<=0))){
+  $response=match($ans,$info);
 
-if($sentence=="你好"){
+  $_SESSION['timeNum']=0;
+  $_SESSION['objNum']=0;
+  $_SESSION['placeNum']=0;
+  $_SESSION['eventNum']=0;
+  $_SESSION['nowState']="";
+
+}
+
+if($sentence=="你好" ){
   $response="你好";
 
   $_SESSION['timeNum']=0;
@@ -145,15 +185,18 @@ $now=count($_SESSION['record']);
 $_SESSION['record'][$now]=$sentence;
 $_SESSION['record'][$now+1]=$response;
 for($i=count($_SESSION['record'])-1;$i>=0;$i--){
-    if($i%2==1){
-        echo("<div class=\"row\">\n<div class=\"right\"><span class=\"teal\" style=\"font-family:微軟正黑體;font-size:24px\">".$_SESSION['record'][$i]."</span></div>\n</div>");
-    }else{
-        echo("<div class=\"row\">\n<div class=\"left\"><span class=\"blue\" style=\"font-family:微軟正黑體;font-size:24px\">".$_SESSION['record'][$i]."</span></div>\n</div>");
-    }
+  if($i%2==1){
+    echo("<div class=\"row\">\n<div class=\"right\"><span class=\"teal\" style=\"font-family:微軟正黑體;font-size:24px\">".$_SESSION['record'][$i]."</span></div>\n</div>");
+  }else{
+    echo("<div class=\"row\">\n<div class=\"left\"><span class=\"blue\" style=\"font-family:微軟正黑體;font-size:24px\">".$_SESSION['record'][$i]."</span></div>\n</div>");
+  }
 }
 $response=rawurlencode($response);
+
+
 if(isset($_SESSION['account'])){
-    $query="INSERT INTO `f74032146`.`record` (`username`,`sentence`,`answer`,`day`,`time`) VALUES ('$_SESSION[account]','$_POST[string]','$response','$day','$time');";
-    mysqli_query($link,$query);
+  $query="INSERT INTO `f74032146`.`record` (`username`,`sentence`,`answer`,`day`,`time`) VALUES ('$_SESSION[account]','$_POST[string]','$response','$day','$time');";
+  mysqli_query($link,$query);
 }
+
 ?>

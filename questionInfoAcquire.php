@@ -7,125 +7,177 @@ function firstInfoAcquire($input,&$info){
 	$info['place'][0]=getPlace($input);
 	$info['event'][0]=getEvent($input);
 
-	if(!($info['time'][0]!=""))$info["timeNum"]++;
-	if(!($info['obj'][0]!=""))$info["objNum"]++;
-	if(!($info['place'][0]!=""))$info["placeNum"]++;
-	if(!($info['event'][0]!=""))$info["eventNum"]++;
+	// echo "time".$info['time'][0].' ';
+	// echo "obj".$info['obj'][0].' ';
+	// echo "event".$info['event'][0].' ';
+	// echo "place".$info['place'][0].' ';
 
-return 1;
+	$info['nowState']="";
+
+	if(!($info['time'][0]=="")){
+		$info["timeNum"]++;
+	}
+	if(!($info['obj'][0]=="")){
+		$info["objNum"]++;
+	}
+	if(!($info['place'][0]=="")){
+		$info["placeNum"]++;
+	}
+	if(!($info['event'][0]=="")){
+		$info["eventNum"]++;
+	}
+
+	return 1;
 }
 
 function timeAcquire($input,&$ans,&$info){
-	
+	//echo "ti ";
 	if($info["nowState"]=="waitTime"){
 		$info["time"][0]=getTime($input);
-        if($info["time"][0]!="")$info['timeNum']++;
-        $info["nowState"]="";
-		return 1;
+		if($info["time"][0]!=""){
+			$info['timeNum']++;
+			$info["nowState"]="";
+			return 1;
+		}
+
 	}
 	if($info["timeNum"]==0){
-	 $ans="請問您說的時間點是甚麼時候?";
-	 	$info["nowState"]="waitTime";
+		$ans="請問您說的時間點是甚麼時候?";
+		$info["nowState"]="waitTime";
 		return 0;
 	}
-	else return 1;
+	//echo "te";
+	return 1;
+
 
 }
 
 function placeAcquire($input,&$ans,&$info){
-	
+	//echo "pi ";
 	if($info["nowState"]=="waitPlace"){
 		$info["place"][0]=getPlace($input);
-	    if($info["place"][0]!="")$info['placeNum']++;
-	    $info["nowState"]="";
-		return 1;
+		if($info["place"][0]!=""){
+			$info['placeNum']++;
+			$info["nowState"]="";
+			return 1;
+		}
 	}
 	if($info["placeNum"]==0){
-	 $ans="請問您說的地點是哪裡?";
-	 $info["nowState"]="waitPlace";
+		$ans="請問您說的地點是哪裡?";
+		$info["nowState"]="waitPlace";
 		return 0;
 	}
-		else return 1;
+	//echo "pe";
+	return 1;
 
 }
 
 function eventAcquire($input,&$ans,&$info){
-	
+	//echo "ei ";
 	if($info["nowState"]=="waitEvent"){
 		$info["event"][0]=getEvent($input);
-        if($info["event"][0]!="")$info['eventNum']++;
-        $info["nowState"]="";
-		return 1;
+		if($info["event"][0]!=""){
+			$info['eventNum']++;
+			$info["nowState"]="";
+			return 1;
+		}
 	}
 	if($info["eventNum"]==0){
-	 $ans="請問您是發生了甚麼事?";
-	 $info["nowState"]="waitEvent";
+		$ans="請問您是發生了甚麼事?";
+		$info["nowState"]="waitEvent";
 		return 0;
 	}
-	else return 1;
+	//echo "ee";
+	return 1;
+
 }
 
 function objectAcquire($input,&$ans,&$info){
-	
-   if($info["nowState"]=="waitObj"){
+	//echo "oi ";
+	if($info["nowState"]=="waitObj"){
 		$info["obj"][0]=getObj($input);
-        if($info["obj"][0]!="")$info['objNum']++;
-        $info["nowState"]="";
-		return 1;
+		if($info["obj"][0]!=""){
+			$info['objNum']++;
+			$info["nowState"]="";
+			return 1;
+		}
 	}
 
 	if($info["objNum"]==0){
-	 $ans="請問您說的他是誰?";
-	 $info["nowState"]="waitObj";
+		$ans="請問您說的他是誰?";
+		$info["nowState"]="waitObj";
 		return 0;
 	}
-		else return 1;
+	//echo "oe";
+	return 1;
 }
 
 function getTime($input){
 	$v=seg($input);
 	$num=count($v);
-	for($i=0;$i<$num;$i++)
-		if($v[$i]["pos"]=='Nd') return $v[$i]["word"] ;
+	for($i=0;$i<$num;$i++){
+		if($v[$i]["pos"]=='Nd'){ return $v[$i]["word"] ;}
+	}
 	return "";
 
 }
 
+
 function getObj($input){
-$v=seg($input);
+	$v=seg($input);
 	$num=count($v);
 	for($i=0;$i<$num;$i++){
-		if(($v[$i]["pos"]=='Na')&&$i+1<$num) 
-			if($v[$i+1]["pos"]=='VA'||$v[$i+1]["pos"]=='VAC'||$v[$i+1]["pos"]=='VB'	||$v[$i+1]["pos"]=='VC'	||$v[$i+1]["pos"]=='VCL'||$v[$i+1]["pos"]=='VD'	||$v[$i+1]["pos"]=='VE'	||$v[$i+1]["pos"]=='VF'	||$v[$i+1]["pos"]=='V') 
-			return $v[$i]["word"] ;
-		if($v[$i]["pos"]=='Nh')return $v[$i]["word"] ;
+		if(($v[$i]["pos"]=='Na')&&$i+1<$num) {
+			if($v[$i+1]["pos"]=='VA'||$v[$i+1]["pos"]=='VAC'||$v[$i+1]["pos"]=='VB'	||$v[$i+1]["pos"]=='VC'	||$v[$i+1]["pos"]=='VCL'||$v[$i+1]["pos"]=='VD'	||$v[$i+1]["pos"]=='VE'	||$v[$i+1]["pos"]=='VF'	||$v[$i+1]["pos"]=='V'){ 
+				return $v[$i]["word"] ;
+			}
+			if($v[$i]["pos"]=='Nh'){return $v[$i]["word"] ;}
+		}
+	}
+
+	if($num==1){
+		if($v[0]["pos"]=='Na'){
+			return $v[0]["word"];
+		}
 	}
 	return "";
-	
+
 }
 
 function getPlace($input){
-$v=seg($input);
+	$v=seg($input);
 	$num=count($v);
 	for($i=0;$i<$num;$i++){
-		if($v[$i]["pos"]=='Nc') return $v[$i]["word"] ;
-		if($v[$i]["pos"]=='Ncd') return $v[$i]["word"] ;
+		if($v[$i]["pos"]=='Nc') {return $v[$i]["word"] ;}
+		if($v[$i]["pos"]=='Ncd') {return $v[$i]["word"] ;}
 	}
 	return "";
 	
 }
 
 function getEvent($input){
-$v=seg($input);
+	$v=seg($input);
 	$num=count($v);
-	for($i=0;$i<$num;$i++)
-		if($v[$i]["pos"]=='VA'||$v[$i]["pos"]=='VAC'||$v[$i]["pos"]=='VB'	||$v[$i]["pos"]=='VC'	||$v[$i]["pos"]=='VCL'	||$v[$i]["pos"]=='VD'	||$v[$i]["pos"]=='VE'	||$v[$i]["pos"]=='VF'	||$v[$i]["pos"]=='V') 
-			if(($i+1<$num)&&($v[$i+1]=='Na'||$v[$i+1]=='Nb'))
+	for($i=0;$i<$num;$i++){
+		if($v[$i]["pos"]=='VAC'||$v[$i]["pos"]=='VB'	||$v[$i]["pos"]=='VC'	||$v[$i]["pos"]=='VCL'	||$v[$i]["pos"]=='VD'	||$v[$i]["pos"]=='VE'	||$v[$i]["pos"]=='VF'	){ 
+			if((($i+1)<$num)&&($v[$i+1]=='Na'||$v[$i+1]=='Nb')){
 				return ($v[$i]["word"] + $v[$i+1]["word"]) ;
+			}
+		}
+		else if($v[$i]["pos"]=='VA'||$v[$i]["pos"]=='VH'){
+			return $v[$i]["word"];
+		}
+	}	
 	return "";
-	
 }
 
+function echoSeg($input){
+	$v=seg($input);
+	$n=count($v);
+	for($i=0;$i<$n;$i++){
+		echo" ".$v[$i]['word']." : ".$v[$i]['pos']." ; ";
+	}
+}
 
 
 
