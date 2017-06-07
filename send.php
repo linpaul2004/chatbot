@@ -39,13 +39,13 @@ if(isset($_SESSION['timeNum'])){        $timeNum=$_SESSION['timeNum'];}
 if(isset($_SESSION['placeNum'])){       $placeNum=$_SESSION['placeNum'];}
 if(isset($_SESSION['objNum'])){         $objNum=$_SESSION['objNum'];}
 if(isset($_SESSION['nowState'])){       $info['nowState']=$_SESSION['nowState'];}
-//if(isset($_SESSION['infoStackNum']))  $info['infoStackNum']=$_SESSION['infoStackNum'];
+if(isset($_SESSION['infoStackNum']))  $info['infoStackNum']=$_SESSION['infoStackNum'];
 
 for($i=0;$i<$eventNum;$i++){            $info['event'][$i]=$_SESSION['event'][$i];}
 for($i=0;$i<$objNum;$i++){              $info['obj'][$i]=$_SESSION['obj'][$i];}
 for($i=0;$i<$timeNum;$i++){             $info['time'][$i]=$_SESSION['time'][$i];}
 for($i=0;$i<$placeNum;$i++){            $info['place'][$i]=$_SESSION['place'][$i];}
-//for($i=0;$i<$info["infoStackNum"];$i++)$info['infoStack'][$i]=$_SESSION['infoStack'][$i];
+for($i=0;$i<$info["infoStackNum"];$i++){$info['infoStack'][$i]=$_SESSION['infoStack'][$i];}
 
 $info['eventNum']=$eventNum;
 $info['timeNum']=$timeNum;
@@ -129,13 +129,13 @@ $_SESSION['eventNum']=$info['eventNum'];
 $_SESSION['objNum']=$info['objNum'];
 $_SESSION['placeNum']=$info['placeNum'];
 $_SESSION['timeNum']=$info['timeNum'];
-//$_SESSION["infoStackNum"]=$info["infoStackNum"];
+$_SESSION["infoStackNum"]=$info["infoStackNum"];
 
 for($i=0;$i<$info['eventNum'];$i++)  { $_SESSION['event'][$i]=$info['event'][$i];}
 for($i=0;$i<$info['objNum'];$i++)    { $_SESSION['obj'][$i]=$info['obj'][$i];}
 for($i=0;$i<$info['placeNum'];$i++)  { $_SESSION['place'][$i]=$info['place'][$i];}
 for($i=0;$i<$info['timeNum'];$i++)   { $_SESSION['time'][$i]=$info['time'][$i];}
-//for($i=0;$i<$info["infoStackNum"];$i++)$_SESSION['infoStack'][$i]=$info['infoStack'][$i];
+for($i=0;$i<$info["infoStackNum"];$i++){$_SESSION['infoStack'][$i]=$info['infoStack'][$i];}
   $_SESSION["nowState"]=$info['nowState'];
 
 if(!(($info['eventNum']<=0)||($info['placeNum']<=0)||($info['objNum']<=0)||($info['timeNum']<=0))){
@@ -146,6 +146,7 @@ if(!(($info['eventNum']<=0)||($info['placeNum']<=0)||($info['objNum']<=0)||($inf
   $_SESSION['placeNum']=0;
   $_SESSION['eventNum']=0;
   $_SESSION['nowState']="";
+  $_SESSION['infoStackNum']=0;
 
 }
 
@@ -157,6 +158,7 @@ if($sentence=="你好" ){
   $_SESSION['placeNum']=0;
   $_SESSION['eventNum']=0;
   $_SESSION['nowState']="";
+   $_SESSION['infoStackNum']=0;
 }
 
 
