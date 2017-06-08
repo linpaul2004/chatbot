@@ -38,7 +38,9 @@ if(isset($_SESSION['timeNum'])){        $timeNum=$_SESSION['timeNum'];}
 if(isset($_SESSION['placeNum'])){       $placeNum=$_SESSION['placeNum'];}
 if(isset($_SESSION['objNum'])){         $objNum=$_SESSION['objNum'];}
 if(isset($_SESSION['nowState'])){       $info['nowState']=$_SESSION['nowState'];}
-if(isset($_SESSION['infoStackNum']))  $info['infoStackNum']=$_SESSION['infoStackNum'];
+if(isset($_SESSION['infoStackNum'])){  $info['infoStackNum']=$_SESSION['infoStackNum'];}
+if(isset($_SESSION['questionType'])){    $info['questionType']=$_SESSION["questionType"];}
+
 
 for($i=0;$i<$eventNum;$i++){            $info['event'][$i]=$_SESSION['event'][$i];}
 for($i=0;$i<$objNum;$i++){              $info['obj'][$i]=$_SESSION['obj'][$i];}
@@ -120,10 +122,35 @@ if(($info['eventNum']<=0)||($info['placeNum']<=0)||($info['objNum']<=0)||($info[
 // echo "pn: ".$info['placeNum']."\n";
 // echo "on: ".$info['objNum']."\n";
 // echo "tn: ".$info['timeNum']."\n";
-$info["infoStackNum"]=$info['timeNum']+$info['eventNum']+$info['placeNum']+$info['objNum'];
+if($info["nowState"]=="needAskClear"){
+  $response="要保留資訊嗎? yes or not";
+  $info["nowState"]="waitClear";
+}
+
+else if ($info["nowState"]=="waitClear"){
+    if($sentence=="yes"){
+      clearQuestionInfo($info);
+    }
+    else{
+      clearQuestionInfo($info);
+      clearInfoStack($info);
+    }
+}
+
+else if(!(($info['eventNum']<=0)||($info['placeNum']<=0)||($info['objNum']<=0)||($info['timeNum']<=0))){
+  $response=match($ans,$info);
+  $info["nowState"]="needAskClear"; 
+}
+
+if($sentence=="你好" ){
+  $response="你好";
+  clearQuestionInfo($info);
+  clearInfoStack($info);
+}
+
+
+
 //data store
-
-
 $_SESSION['eventNum']=$info['eventNum'];
 $_SESSION['objNum']=$info['objNum'];
 $_SESSION['placeNum']=$info['placeNum'];
@@ -135,30 +162,10 @@ for($i=0;$i<$info['objNum'];$i++)    { $_SESSION['obj'][$i]=$info['obj'][$i];}
 for($i=0;$i<$info['placeNum'];$i++)  { $_SESSION['place'][$i]=$info['place'][$i];}
 for($i=0;$i<$info['timeNum'];$i++)   { $_SESSION['time'][$i]=$info['time'][$i];}
 for($i=0;$i<$info["infoStackNum"];$i++){$_SESSION['infoStack'][$i]=$info['infoStack'][$i];}
+  
   $_SESSION["nowState"]=$info['nowState'];
+  $_SESSION["questionType"]=$info["questionType"];
 
-if(!(($info['eventNum']<=0)||($info['placeNum']<=0)||($info['objNum']<=0)||($info['timeNum']<=0))){
-  $response=match($ans,$info);
-
-  $_SESSION['timeNum']=0;
-  $_SESSION['objNum']=0;
-  $_SESSION['placeNum']=0;
-  $_SESSION['eventNum']=0;
-  $_SESSION['nowState']="";
-  $_SESSION['infoStackNum']=0;
-
-}
-
-if($sentence=="你好" ){
-  $response="你好";
-
-  $_SESSION['timeNum']=0;
-  $_SESSION['objNum']=0;
-  $_SESSION['placeNum']=0;
-  $_SESSION['eventNum']=0;
-  $_SESSION['nowState']="";
-   $_SESSION['infoStackNum']=0;
-}
 
 
 

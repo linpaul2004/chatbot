@@ -31,7 +31,14 @@ function firstInfoAcquire($input,&$info){
 		$info["eventNum"]++;
 	}
 
+
 	return 1;
+}
+
+function typeOfQuestion(&$info){
+	$word=array();
+	$word=$info["event"][0];
+	if(($word=="約會")||($word=="告白")){$info["questionType"]=="date";}
 }
 
 function timeAcquire($input,&$ans,&$info){
@@ -112,21 +119,22 @@ function objectAcquire($input,&$ans,&$info){
 	}
 
 	if($info["objNum"]==0){
-		//if($info["obj"][0]!=""){
-		//$ans="請問您說的".$info["obj"][0]."是誰?";
-		$ans="請問您說的"."他"."是誰?";
-		$info["nowState"]="waitObj";
-		return 0;
-		//}
-		//else {
 			$ans="";
 			if($info["timeNum"]!=0){$ans=$info["time"][0];}
 			$ans=$ans."跟誰";
 			if($info["placeNum"]!=0){$ans=$ans."在".$info["place"][0];}
 			if($info['eventNum']!=0){$ans=$ans.$info["event"][0];}
+			$info["nowState"]="waitObj";
 			return 0;
-		//}
 	}
+	$v=seg($info["obj"][0]);
+	if($v['pos']=="Nh"){
+		$ans="請問您說的".$info["obj"][0]."是誰?";
+		//$ans="請問您說的"."他"."是誰?";
+		$info["nowState"]="waitObj";
+		return 0;
+	}
+
 	//echo "oe";
 	return 1;
 }
@@ -134,11 +142,23 @@ function objectAcquire($input,&$ans,&$info){
 function getTime($input){
 	$v=seg($input);
 	$num=count($v);
+	$ans="";
 	for($i=0;$i<$num;$i++){
-		if($v[$i]["pos"]=='Nd'){ return $v[$i]["word"] ;}
+		if($v[$i]["pos"]=='Nd'){ 
+			$ans= $v[$i]["word"] ;
+			while(true){
+				$i++;
+				if($i<$num && $v[$i]["word"]){
+					$ans=$ans.$v[$i]["word"];
+				}
+				else {
+					break;
+				}
+			}
+			return $ans;
+		}
 	}
 	return "";
-
 }
 
 
@@ -198,11 +218,29 @@ function echoSeg($input){
 	}
 }
 
-function pushInfoStack($type,$input,&$info){
-	$n=$info["infoStackNum"];
-	$info["infoStack"][$n]=$input;
-	$info["infoStackNum"]++;
+function pushInfoStack($input,&$info){
+	if($info["questionType"]==""){
+		$n=$info["infoStackNum"];
+		$info["infoStack"][$n]=$input;
+		$info["infoStackNum"]++;
+	}
 }
 
+function deleteAttributeStack(&$info){
+	if($info["questionType"]==""){
+		$info["infoStackNum"]--;
+	}
+}
 
+function clearQuestionInfo(&$info){
+  $info['timeNum']=0;
+  $info['objNum']=0;
+  $info['placeNum']=0;
+  $info['eventNum']=0;
+  $info['nowState']="";
+}
+
+function clearInfoStack(&$info){
+	$info['infoStackNum']=0;
+}
 ?>
