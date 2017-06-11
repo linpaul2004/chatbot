@@ -5,7 +5,7 @@ function firstInfoAcquire($input,&$info){
 	$info['time'][0]=getTime($input);
 	$info['obj'][0]=getObj($input);
 	$info['place'][0]=getPlace($input);
-	$info['event'][0]=getEvent($input);
+	$info['event'][0]=getEvent($input);       
 
 	// echo "time".$info['time'][0].' ';
 	// echo "obj".$info['obj'][0].' ';
@@ -218,18 +218,19 @@ function echoSeg($input){
 	}
 }
 
-function pushInfoStack($input,&$info){
+function pushInfoStack($type,$input,&$info){
 	if($info["questionType"]==""){
 		$n=$info["infoStackNum"];
-		$info["infoStack"][$n]=$input;
+		$info["infoStack"][$n]["word"]=$input;
+		$info["infoStack"][$n]["type"]=$type;
 		$info["infoStackNum"]++;
 	}
 }
 
 function deleteAttributeStack(&$info){
-	if($info["questionType"]==""){
-		$info["infoStackNum"]--;
-	}
+
+	$info["infoStackNum"]--;
+
 }
 
 function clearQuestionInfo(&$info){

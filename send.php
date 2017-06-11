@@ -46,7 +46,10 @@ for($i=0;$i<$eventNum;$i++){            $info['event'][$i]=$_SESSION['event'][$i
 for($i=0;$i<$objNum;$i++){              $info['obj'][$i]=$_SESSION['obj'][$i];}
 for($i=0;$i<$timeNum;$i++){             $info['time'][$i]=$_SESSION['time'][$i];}
 for($i=0;$i<$placeNum;$i++){            $info['place'][$i]=$_SESSION['place'][$i];}
-for($i=0;$i<$info["infoStackNum"];$i++){$info['infoStack'][$i]=$_SESSION['infoStack'][$i];}
+for($i=0;$i<$info["infoStackNum"];$i++){$info['infoStack'][$i]["word"]=$_SESSION['infoStack'][$i]["word"];}
+for($i=0;$i<$info["infoStackNum"];$i++){$info['infoStack'][$i]["type"]=$_SESSION['infoStack'][$i]["type"];}
+  
+
 
 $info['eventNum']=$eventNum;
 $info['timeNum']=$timeNum;
@@ -161,7 +164,8 @@ for($i=0;$i<$info['eventNum'];$i++)  { $_SESSION['event'][$i]=$info['event'][$i]
 for($i=0;$i<$info['objNum'];$i++)    { $_SESSION['obj'][$i]=$info['obj'][$i];}
 for($i=0;$i<$info['placeNum'];$i++)  { $_SESSION['place'][$i]=$info['place'][$i];}
 for($i=0;$i<$info['timeNum'];$i++)   { $_SESSION['time'][$i]=$info['time'][$i];}
-for($i=0;$i<$info["infoStackNum"];$i++){$_SESSION['infoStack'][$i]=$info['infoStack'][$i];}
+for($i=0;$i<$info["infoStackNum"]["word"];$i++){$_SESSION['infoStack'][$i]=$info['infoStack'][$i]["word"];}
+for($i=0;$i<$info["infoStackNum"]["type"];$i++){$_SESSION['infoStack'][$i]=$info['infoStack'][$i]["type"];}
   
   $_SESSION["nowState"]=$info['nowState'];
   $_SESSION["questionType"]=$info["questionType"];
