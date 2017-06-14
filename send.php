@@ -27,6 +27,7 @@ $info['obj']=array();
 $info['infoStack']=array();
 $info['nowState']="";
 $info['infoStackNum']=0;
+$info['questionType']="";
 
 $eventNum=0;
 $timeNum=0;
@@ -88,6 +89,11 @@ if(($info['eventNum']<=0)||($info['placeNum']<=0)||($info['objNum']<=0)||($info[
 
   while(1){
     $tem=rand(0,3);
+    if($temOk[$tem]==0){
+      if(eventAcquire($sentence,$ans,$info)==0) {
+        break;
+      }
+    }
 //echo 'a'.$tem.' ;';
     if(($temOk[0]+$temOk[1]+$temOk[2]+$temOk[3])>=4){
       break;
@@ -126,17 +132,21 @@ if(($info['eventNum']<=0)||($info['placeNum']<=0)||($info['objNum']<=0)||($info[
 // echo "on: ".$info['objNum']."\n";
 // echo "tn: ".$info['timeNum']."\n";
 if($info["nowState"]=="needAskClear"){
-  $response="要保留資訊嗎? yes or not";
+  $response="要保留資訊嗎? yes or no";
   $info["nowState"]="waitClear";
 }
 
 else if ($info["nowState"]=="waitClear"){
     if($sentence=="yes"){
       clearQuestionInfo($info);
+      $response="保留資訊";
+      $info["nowState"]="";
     }
-    else{
+    else if($sentence=="no"){
       clearQuestionInfo($info);
       clearInfoStack($info);
+      $response="你好";
+       $info["nowState"]="";
     }
 }
 

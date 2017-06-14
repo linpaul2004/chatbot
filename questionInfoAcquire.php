@@ -54,7 +54,12 @@ function timeAcquire($input,&$ans,&$info){
 
 	}
 	if($info["timeNum"]==0){
-		$ans="請問您說的時間點是甚麼時候?";
+		if($info["eventNum"]!=0){
+			$ans="請問在甚麼時候".$info["event"][0]."?";
+		}
+		else{
+			$ans="請問您說的時間點是甚麼時候?";
+		}
 		$info["nowState"]="waitTime";
 		return 0;
 	}
@@ -76,7 +81,13 @@ function placeAcquire($input,&$ans,&$info){
 		}
 	}
 	if($info["placeNum"]==0){
-		$ans="請問您說的地點是哪裡?";
+		if($info["eventNum"]!=0){
+			$ans="請問在哪裡".$info["event"][0]."?";
+
+		}
+		else{
+			$ans="請問您說的地點是哪裡?";
+		}
 		$info["nowState"]="waitPlace";
 		return 0;
 	}
@@ -97,7 +108,7 @@ function eventAcquire($input,&$ans,&$info){
 		}
 	}
 	if($info["eventNum"]==0){
-		$ans="請問您是發生了甚麼事?";
+		$ans="請問發生了甚麼事?";
 		$info["nowState"]="waitEvent";
 		return 0;
 	}
