@@ -7,11 +7,6 @@ function firstInfoAcquire($input,&$info){
 	$info['place'][0]=getPlace($input);
 	$info['event'][0]=getEvent($input);       
 
-	// echo "time".$info['time'][0].' ';
-	// echo "obj".$info['obj'][0].' ';
-	// echo "event".$info['event'][0].' ';
-	// echo "place".$info['place'][0].' ';
-
 	$info['nowState']="";
 
 	if(!($info['time'][0]=="")){
@@ -39,19 +34,29 @@ function typeOfQuestion(&$info){
 	$word=array();
 	$word=$info["event"][0];
 	if(($word=="約會")||($word=="告白")){$info["questionType"]=="date";}
+	if(($word=="分手")){$info["questionType"]=="deliver";}
 }
 
 function timeAcquire($input,&$ans,&$info){
-	//echo "ti ";
+	echo "ti ";
 	if($info["nowState"]=="waitTime"){
 		$info["time"][0]=getTime($input);
 		if($info["time"][0]!=""){
 			pushInfoStack('time',$info['time'][0],$info);
 			$info['timeNum']++;
-			$info["nowState"]="";
-			return 1;
+			$info["nowState"]="";			
 		}
-
+		else{
+			$info["nowState"]="waitTime2";	
+		}
+			return 1;			
+	}
+	if($info["nowState"]=="waitTime21"){
+		$info["time"][0]=$input;
+		pushInfoStack('time',$info['time'][0],$info);
+		$info['timeNum']++;
+		$info["nowState"]="";			
+		return 1;	
 	}
 	if($info["timeNum"]==0){
 		if($info["eventNum"]!=0){
@@ -60,7 +65,12 @@ function timeAcquire($input,&$ans,&$info){
 		else{
 			$ans="請問您說的時間點是甚麼時候?";
 		}
-		$info["nowState"]="waitTime";
+		if($info["nowState"]=="waitTime2"){
+			$info["nowState"]="waitTime21";
+		}
+		else{
+			$info["nowState"]="waitTime";
+		}
 		return 0;
 	}
 	//echo "te";
@@ -79,6 +89,16 @@ function placeAcquire($input,&$ans,&$info){
 			$info["nowState"]="";
 			return 1;
 		}
+		else{
+			$info["nowState"]="waitPlace2";	
+		}
+	}
+	if($info["nowState"]=="waitPlace21"){
+		$info["place"][0]=$input;
+		pushInfoStack('place',$info['place'][0],$info);
+		$info['placeNum']++;
+		$info["nowState"]="";			
+		return 1;	
 	}
 	if($info["placeNum"]==0){
 		if($info["eventNum"]!=0){
@@ -88,7 +108,12 @@ function placeAcquire($input,&$ans,&$info){
 		else{
 			$ans="請問您說的地點是哪裡?";
 		}
-		$info["nowState"]="waitPlace";
+		if($info["nowState"]=="waitPlace2"){
+			$info["nowState"]="waitPlace21";
+		}
+		else{
+			$info["nowState"]="waitPlace";
+		}
 		return 0;
 	}
 	//echo "pe";
@@ -106,10 +131,26 @@ function eventAcquire($input,&$ans,&$info){
 			$info["nowState"]="";
 			return 1;
 		}
+		else{
+			$info["nowState"]="waitEvent2";	
+		}
+		return 1;	
+	}
+	if($info["nowState"]=="waitEvent21"){
+		$info["event"][0]=$input;
+		pushInfoStack('event',$info['event'][0],$info);
+		$info['timeNum']++;
+		$info["nowState"]="";			
+		return 1;	
 	}
 	if($info["eventNum"]==0){
 		$ans="請問發生了甚麼事?";
-		$info["nowState"]="waitEvent";
+		if($info["nowState"]=="waitEvent2"){
+			$info["nowState"]="waitEvent21";
+		}
+		else{
+			$info["nowState"]="waitEvent";
+		}
 		return 0;
 	}
 	//echo "ee";
@@ -127,8 +168,19 @@ function objectAcquire($input,&$ans,&$info){
 			$info["nowState"]="";
 			return 1;
 		}
+		else{
+			$info["nowState"]="waitObj2";	
+		}
+		return 1;	
 	}
 
+	if($info["nowState"]=="waitObj21"){
+		$info["obj"][0]=$input;
+		pushInfoStack('obj',$info['obj'][0],$info);
+		$info['objNum']++;
+		$info["nowState"]="";			
+		return 1;	
+	}
 	if($info["objNum"]==0){
 			$ans="";
 			if($info["timeNum"]!=0){$ans=$info["time"][0];}
@@ -139,13 +191,17 @@ function objectAcquire($input,&$ans,&$info){
 			return 0;
 	}
 	$v=seg($info["obj"][0]);
-	if($v['pos']=="Nh"){
+	if($v[0]['pos']=="Nh"){
 		$ans="請問您說的".$info["obj"][0]."是誰?";
 		//$ans="請問您說的"."他"."是誰?";
-		$info["nowState"]="waitObj";
+		if($info["nowState"]=="waitObj2"){
+			$info["nowState"]="waitObj21";
+		}
+		else{
+			$info["nowState"]="waitObj";
+		}
 		return 0;
 	}
-
 	//echo "oe";
 	return 1;
 }
@@ -254,5 +310,12 @@ function clearQuestionInfo(&$info){
 
 function clearInfoStack(&$info){
 	$info['infoStackNum']=0;
+}
+
+function echoAllInfo($info,$first="",$end=""){
+ 	 echo $first."time".$info['time'][0].$end.' ';
+	 echo $first."obj".$info['obj'][0].$end.' ';
+	 echo $first."event".$info['event'][0].$end.' ';
+	 echo $first."place".$info['place'][0].$end.' ';
 }
 ?>

@@ -16,8 +16,6 @@ $sentence=urldecode($_POST['string']);
 $response="error";
 
 
-
-
 ///////data load
 $info=array();
 $info['event']=array();
@@ -25,6 +23,8 @@ $info['time']=array();
 $info['place']=array();
 $info['obj']=array();
 $info['infoStack']=array();
+$info['infoStack']["word"]=array();
+$info['infoStack']["type"]=array();
 $info['nowState']="";
 $info['infoStackNum']=0;
 $info['questionType']="";
@@ -76,12 +76,31 @@ else if($info["nowState"]=="waitPlace"){ placeAcquire($sentence,$ans,$info);}
 else if($info["nowState"]=="waitObj"){ objectAcquire($sentence,$ans,$info);}
 else if($info["nowState"]=="waitEvent"){ EventAcquire($sentence,$ans,$info);}
 
-// echo "en2: ".$info['eventNum'].",";
-// echo "pn2: ".$info['placeNum'].",";
-// echo "on2: ".$info['objNum'].",";
-// echo "tn2: ".$info['timeNum'].",";
+if($info["nowState"]=="waitTime21"){ timeAcquire($sentence,$ans,$info);}
+else if($info["nowState"]=="waitPlace21"){ placeAcquire($sentence,$ans,$info);}
+else if($info["nowState"]=="waitObj21"){ objectAcquire($sentence,$ans,$info);}
+else if($info["nowState"]=="waitEvent21"){ EventAcquire($sentence,$ans,$info);}
 
-if(($info['eventNum']<=0)||($info['placeNum']<=0)||($info['objNum']<=0)||($info['timeNum']<=0)){
+//////ask second time
+if($info["nowState2"]=="waitTime2"){ 
+  timeAcquire($sentence,$ans,$info);
+  $response=$ans;
+}
+else if($info["nowState2"]=="waitPlace2"){
+  placeAcquire($sentence,$ans,$info);
+  $response=$ans;
+}
+else if($info["nowState2"]=="waitObj2"){
+  objectAcquire($sentence,$ans,$info);
+  $response=$ans;
+}
+else if($info["nowState2"]=="waitEvent2"){
+  EventAcquire($sentence,$ans,$info);
+  $response=$ans;
+}
+
+///////ask firstime
+else if(($info['eventNum']<=0)||($info['placeNum']<=0)||($info['objNum']<=0)||($info['timeNum']<=0)){
   $temOk[0]=0;
   $temOk[1]=0;
   $temOk[2]=0;
@@ -153,6 +172,8 @@ else if ($info["nowState"]=="waitClear"){
 else if(!(($info['eventNum']<=0)||($info['placeNum']<=0)||($info['objNum']<=0)||($info['timeNum']<=0))){
   $response=match($ans,$info);
   $info["nowState"]="needAskClear"; 
+  $response=$response."\n"."要保留資訊嗎? yes or no";
+  $info["nowState"]="waitClear";
 }
 
 if($sentence=="你好" ){

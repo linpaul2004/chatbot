@@ -77,7 +77,7 @@
 		}
 
 	}
-	for($j=0;$j<19;$j++){  //parse the last 2-19 page;
+	for($j=0;$j<50;$j++){  //parse the last 2-19 page;
 		if(($pageNUM-$j)<=0)break;
 		$html_c = file_get_contents($url_base.(intval($pageNUM)-$j).'.html');
 		$html_a;
