@@ -53,9 +53,9 @@
                 if(isset($_SESSION['record'])){
                     for($i=0;$i<count($_SESSION['record']);$i++){
                         if($i%2==1){
-                            echo("<h1>\n<div class=\"send\">\n".$_SESSION['record'][$i]."</div></h1>");
+                            echo("<h1>\n<div class=\"send\">\n"."<img src=\"bot-512.png\" alt=\"bot-icon\" style=\"display:inline-block\" width=\"10%\" height=\"10%\">".$_SESSION['record'][$i]."</div></h1>");
                         }else{
-                            echo("<h2>\n<div class=\"user\">\n".$_SESSION['record'][$i]."</div></h2>");
+                            echo("<h2>\n<div class=\"user\">\n".$_SESSION['record'][$i]."\n</div></h2>");
                         }
                     }
                 }
