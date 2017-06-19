@@ -1,5 +1,6 @@
 <?php
 include_once "CKIP_Client.php";
+include_once "infoPreprocessor.php";
 
 function firstInfoAcquire($input,&$info){
 	$info['time'][0]=getTime($input);
@@ -9,6 +10,10 @@ function firstInfoAcquire($input,&$info){
 
 	$info['nowState']="";
 
+	if(!($info['event'][0]=="")){
+		pushInfoStack('event',$info['event'][0],$info);
+		$info["eventNum"]++;
+	}
 	if(!($info['time'][0]=="")){
 		pushInfoStack('time',$info['time'][0],$info);
 		$info["timeNum"]++;
@@ -21,10 +26,7 @@ function firstInfoAcquire($input,&$info){
 		pushInfoStack('place',$info['place'][0],$info);
 		$info["placeNum"]++;
 	}
-	if(!($info['event'][0]=="")){
-		pushInfoStack('event',$info['event'][0],$info);
-		$info["eventNum"]++;
-	}
+	
 
 
 	return 1;
@@ -38,7 +40,7 @@ function typeOfQuestion(&$info){
 }
 
 function timeAcquire($input,&$ans,&$info){
-	echo "ti ";
+//	echo "ti ";
 	if($info["nowState"]=="waitTime"){
 		$info["time"][0]=getTime($input);
 		if($info["time"][0]!=""){
@@ -183,7 +185,7 @@ function objectAcquire($input,&$ans,&$info){
 	}
 	if($info["objNum"]==0){
 			$ans="";
-			if($info["timeNum"]!=0){$ans=$info["time"][0];}
+			//if($info["timeNum"]!=0){$ans=$info["time"][0];}
 			$ans=$ans."跟誰";
 			if($info["placeNum"]!=0){$ans=$ans."在".$info["place"][0];}
 			if($info['eventNum']!=0){$ans=$ans.$info["event"][0];}
@@ -286,12 +288,12 @@ function echoSeg($input){
 }
 
 function pushInfoStack($type,$input,&$info){
-	if($info["questionType"]==""){
+	//if($info["questionType"]==""){
 		$n=$info["infoStackNum"];
 		$info["infoStack"][$n]["word"]=$input;
 		$info["infoStack"][$n]["type"]=$type;
 		$info["infoStackNum"]++;
-	}
+	//}
 }
 
 function deleteAttributeStack(&$info){

@@ -82,19 +82,19 @@ else if($info["nowState"]=="waitObj21"){ objectAcquire($sentence,$ans,$info);}
 else if($info["nowState"]=="waitEvent21"){ EventAcquire($sentence,$ans,$info);}
 
 //////ask second time
-if($info["nowState2"]=="waitTime2"){ 
+if($info["nowState"]=="waitTime2"){ 
   timeAcquire($sentence,$ans,$info);
   $response=$ans;
 }
-else if($info["nowState2"]=="waitPlace2"){
+else if($info["nowState"]=="waitPlace2"){
   placeAcquire($sentence,$ans,$info);
   $response=$ans;
 }
-else if($info["nowState2"]=="waitObj2"){
+else if($info["nowState"]=="waitObj2"){
   objectAcquire($sentence,$ans,$info);
   $response=$ans;
 }
-else if($info["nowState2"]=="waitEvent2"){
+else if($info["nowState"]=="waitEvent2"){
   EventAcquire($sentence,$ans,$info);
   $response=$ans;
 }
@@ -195,8 +195,8 @@ for($i=0;$i<$info['eventNum'];$i++)  { $_SESSION['event'][$i]=$info['event'][$i]
 for($i=0;$i<$info['objNum'];$i++)    { $_SESSION['obj'][$i]=$info['obj'][$i];}
 for($i=0;$i<$info['placeNum'];$i++)  { $_SESSION['place'][$i]=$info['place'][$i];}
 for($i=0;$i<$info['timeNum'];$i++)   { $_SESSION['time'][$i]=$info['time'][$i];}
-for($i=0;$i<$info["infoStackNum"]["word"];$i++){$_SESSION['infoStack'][$i]=$info['infoStack'][$i]["word"];}
-for($i=0;$i<$info["infoStackNum"]["type"];$i++){$_SESSION['infoStack'][$i]=$info['infoStack'][$i]["type"];}
+for($i=0;$i<$info["infoStackNum"];$i++){$_SESSION['infoStack'][$i]["word"]=$info['infoStack'][$i]["word"];}
+for($i=0;$i<$info["infoStackNum"];$i++){$_SESSION['infoStack'][$i]["type"]=$info['infoStack'][$i]["type"];}
   
   $_SESSION["nowState"]=$info['nowState'];
   $_SESSION["questionType"]=$info["questionType"];
