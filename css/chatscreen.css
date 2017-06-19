@@ -96,7 +96,7 @@ button:hover {
 
 .send {
     position:relative;
-    display: inline-block;
+    display: block;
     background:#FFD700;
     border-radius:10px; 
     border-width:3px; 

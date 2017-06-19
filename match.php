@@ -34,20 +34,27 @@ function match($ans,$info){
 */
 
 	mysqli_query($link,"SET NAMES utf8");
-	$query="SELECT `url` FROM `pttdata` WHERE `title` LIKE '%".$info["event"][0]."%' ORDER BY `push` DESC";
-//	$query="SELECT `url` FROM `pttdata` WHERE `title` LIKE '%".$info["obj"][0]."%".$info["event"][0]."%' ORDER BY `push` DESC";
+
+	$query="SELECT `url` FROM `pttdata` WHERE `title` LIKE 'Re:%".$info["obj"][0]."%".$info["event"][0]."%' ORDER BY `push` DESC";
+	//$query="SELECT `url` FROM `pttdata` ORDER BY `push` DESC";
 	$result=mysqli_query($link,$query);
-	
-//	if($keep){
-		$res="";
-	if($result){
+	//echo(gettype($result));
+	//if($keep){
+	if(mysqli_num_rows($result)){
+
 		$result=mysqli_fetch_array($result);
 		return "匹配到的網址：<br>".$result[0];
 //		return "匹配到的網址：<br>".$keep[0];
 //		articleFatch($result[0],$res);
 		return $res;
 	}else{
-		return "抱歉，我還無法解決您的問題"."<br>Error Code:".$query;
+		$query="SELECT `url` FROM `pttdata` WHERE `title` LIKE 'Re:%".$info["event"][0]."%' ORDER BY `push` DESC";
+		$result=mysqli_query($link,$query);
+		if(mysqli_num_rows($result)){
+			$result=mysqli_fetch_array($result);
+			return "匹配到的網址：<br>".$result[0];
+		}
+		return "抱歉，我還無法解決您的問題<br>";
 	}
 }
 

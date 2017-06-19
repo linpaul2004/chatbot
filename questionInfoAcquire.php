@@ -62,10 +62,10 @@ function timeAcquire($input,&$ans,&$info){
 	}
 	if($info["timeNum"]==0){
 		if($info["eventNum"]!=0){
-			$ans="請問在甚麼時候".$info["event"][0]."?";
+			$ans="請問是在什麼時候".$info["event"][0]."?";
 		}
 		else{
-			$ans="請問您說的時間點是甚麼時候?";
+			$ans="請問您說的時間點是什麼時候?";
 		}
 		if($info["nowState"]=="waitTime2"){
 			$info["nowState"]="waitTime21";
@@ -104,7 +104,7 @@ function placeAcquire($input,&$ans,&$info){
 	}
 	if($info["placeNum"]==0){
 		if($info["eventNum"]!=0){
-			$ans="請問在哪裡".$info["event"][0]."?";
+			$ans="請問在哪裡".$info["event"][0]."呢?";
 
 		}
 		else{
@@ -146,7 +146,7 @@ function eventAcquire($input,&$ans,&$info){
 		return 1;	
 	}
 	if($info["eventNum"]==0){
-		$ans="請問發生了甚麼事?";
+		$ans="不好意思，可以請你把發生的事情再說一遍嗎?";
 		if($info["nowState"]=="waitEvent2"){
 			$info["nowState"]="waitEvent21";
 		}
@@ -194,7 +194,7 @@ function objectAcquire($input,&$ans,&$info){
 	}
 	$v=seg($info["obj"][0]);
 	if($v[0]['pos']=="Nh"){
-		$ans="請問您說的".$info["obj"][0]."是誰?";
+		$ans="請問這個".$info["obj"][0]."是指誰?";
 		//$ans="請問您說的"."他"."是誰?";
 		if($info["nowState"]=="waitObj2"){
 			$info["nowState"]="waitObj21";

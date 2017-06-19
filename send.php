@@ -164,7 +164,7 @@ else if ($info["nowState"]=="waitClear"){
     else if($sentence=="no"){
       clearQuestionInfo($info);
       clearInfoStack($info);
-      $response="你好";
+      $response="好的，請問還有什麼問題要問嗎？";
        $info["nowState"]="";
     }
 }
@@ -177,7 +177,7 @@ else if(!(($info['eventNum']<=0)||($info['placeNum']<=0)||($info['objNum']<=0)||
 }
 
 if($sentence=="你好" ){
-  $response="你好";
+  $response="你好，有什麼感情方面的問題都可以問我喔";
   clearQuestionInfo($info);
   clearInfoStack($info);
 }
@@ -230,7 +230,7 @@ $_SESSION['record'][$now+1]=$response;
 echo("<h1>\n<div class=\"send\">\n你好，我是感情諮詢ChatBot，<br>請問你想要問什麼？</div></h1>");
 for($i=0;$i<count($_SESSION['record']);$i++){
   if($i%2==1){
-    echo("<h1>\n<div class=\"send\">\n".$_SESSION['record'][$i]."</div></h1>");
+    echo("<h1>\n<div class=\"send\">\n"."<img src=\"bot-512.png\" alt=\"bot-icon\" style=\"display:inline-block\" width=\"10%\" height=\"10%\">".$_SESSION['record'][$i]."</div></h1>");
   }else{
     echo("<h2>\n<div class=\"user\">\n".$_SESSION['record'][$i]."</div></h2>");
   }
