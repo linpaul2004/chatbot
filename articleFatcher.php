@@ -1,15 +1,19 @@
 <?php
-//$url="https://www.ptt.cc/bbs/Boy-Girl/M.1497839419.A.96A.html";
+//$url="www.ptt.cc./bbs/Boy-Girl/M.1493873127.A.EC1.html";
 //$res="aa";
 //articleFatch($url,$res);
 //echo $res;
-function articleFatch($url,&$res){
+function articleFatch($url,&$res){	
+	$url=preg_replace('/\n/i','', $url);
+	//$url="www.ptt.cc./bbs/Boy-Girl/M.1493873127.A.EC1.html";
+	$url="https://".$url;
 	$html_c = file_get_contents($url);	
 	$html_a=mb_split('\n',$html_c);
 	$cou=count($html_a);    //get the line amount of the html page;
 	//print $cou."\n";    //print the line amount  of the html page
 	//$res="bb";
-	$url=preg_replace('/\n/i','', $url);
+	//$res="ggg";
+	
 	for($i=0;$i<$cou;$i++){
 		if(ereg('作者',$html_a[$i])==1){
 			//$res="cc";

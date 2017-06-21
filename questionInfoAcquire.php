@@ -209,6 +209,11 @@ function objectAcquire($input,&$ans,&$info){
 }
 
 function getTime($input){
+	$ans="";
+	if(timePreprocess($input,$ans)==1){
+		return $ans;
+	}
+
 	$v=seg($input);
 	$num=count($v);
 	$ans="";
@@ -232,6 +237,10 @@ function getTime($input){
 
 
 function getObj($input){
+	$ans="";
+	if(objPreprocess($input,$ans)==1){
+		return $ans;
+	}
 	$v=seg($input);
 	$num=count($v);
 	for($i=0;$i<$num;$i++){
@@ -253,6 +262,10 @@ function getObj($input){
 }
 
 function getPlace($input){
+	$ans="";
+	if(placePreprocess($input,$ans)==1){
+		return $ans;
+	}
 	$v=seg($input);
 	$num=count($v);
 	for($i=0;$i<$num;$i++){
@@ -264,6 +277,10 @@ function getPlace($input){
 }
 
 function getEvent($input){
+	$ans="";
+	if(eventPreprocess($input,$ans)==1){
+		return $ans;
+	}
 	$v=seg($input);
 	$num=count($v);
 	for($i=0;$i<$num;$i++){

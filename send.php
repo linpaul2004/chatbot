@@ -13,7 +13,7 @@ if(isset($_SESSION['record'])==false){
   $_SESSION['record']=array();
 }
 $sentence=urldecode($_POST['string']);
-$response="error";
+$response="你說的我聽不太懂ㄟ";
 
 
 ///////data load
