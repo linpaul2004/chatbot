@@ -42,7 +42,7 @@ function match($ans,$info){
 	//if($keep){
 	if(mysqli_num_rows($result)){
 		$result=mysqli_fetch_array($result);
-		$res="kk";
+		//$res="kk";
 		articleFatch($result[0],$res);
 		return "匹配到的網址：<br>".$result[0]."<br>內容如下<br>".$res."<br><br><br>";
 //		return "匹配到的網址：<br>".$keep[0];
@@ -52,7 +52,7 @@ function match($ans,$info){
 		$query="SELECT `url` FROM `pttdata` WHERE `title` LIKE 'Re:%".$info["event"][0]."%' ORDER BY `push` DESC";
 		$result=mysqli_query($link,$query);
 		if(mysqli_num_rows($result)){
-			$res="kk";
+			//$res="kk";
 			$result=mysqli_fetch_array($result);
 			articleFatch($result[0],$res);
 			return "匹配到的網址：<br>".$result[0]."<br>內容如下<br>".$res."<br><br><br>";

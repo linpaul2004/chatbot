@@ -10,9 +10,9 @@ function timePreprocess(&$input,&$ans){
 	$n=count($t);
 	
 	for($i=0;$i<$n;$i++){	
-		if(ereg($t[$i],$input)==1){
+		if(strpos($input,$t[$i])!==false){
 			$ans=$t[$i];
-			$input= preg_replace($t[$i],"",$inpur);
+			//$input= preg_replace($t[$i],"",$inpur);
 			return 1;	
 		}
 	}
@@ -28,9 +28,9 @@ function placePreprocess($input,&$ans){
 	$n=count($t);
 	
 	for($i=0;$i<$n;$i++){	
-		if(ereg($t[$i],$input)==1){
+		if(strpos($input,$t[$i])!==false){
 			$ans=$t[$i];
-			$input= preg_replace($t[$i],"",$inpur);
+			//$input= preg_replace($t[$i],"",$inpur);
 			return 1;	
 		}
 	}
@@ -44,6 +44,7 @@ function eventPreprocess($input,&$ans){
 	$t[2]="劈腿";
 	$t[3]="出軌";
 	$t[4]="外遇";
+	$t[5]="偷吃";
 
 
 	$i=0;
@@ -51,9 +52,9 @@ function eventPreprocess($input,&$ans){
 	
 
 	for($i=0;$i<$n;$i++){	
-		if(ereg($t[$i],$input)==1){
+		if(strpos($input,$t[$i])!==false){
 			$ans=$t[$i];
-			$input= preg_replace($t[$i],"",$inpur);
+			//$input= preg_replace($t[$i],"",$inpur);
 			return 1;	
 		}
 	}
@@ -72,9 +73,9 @@ function objPreprocess($input,&$ans){
 	$i=0;
 	$n=count($t);
 	for($i=0;$i<$n;$i++){	
-		if(ereg($t[$i],$input)==1){
+		if(strpos($input,$t[$i])!==false){
 			$ans=$t[$i];
-			$input= preg_replace($t[$i],"",$inpur);
+			//$input= preg_replace($t[$i],"",$inpur);
 			return 1;	
 		}
 	}
