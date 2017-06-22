@@ -42,9 +42,12 @@ function match($ans,$info){
 	//if($keep){
 	if(mysqli_num_rows($result)){
 		$result=mysqli_fetch_array($result);
+		$result[0]=preg_replace('/www.ptt.cc./','www.ptt.cc',$result[0]);
 		//$res="kk";
 		articleFatch($result[0],$res);
-		return "匹配到的網址：<br>".$result[0]."<br>內容如下<br>".$res."<br><br><br>";
+		$res="關於這個問題的回答如下：<br>".$res."<br>(";
+		$res=$res."<a href=\""."https://".$result[0]."\" target=\"_new\" >想了解更多請點此</a>)<br><br>";
+		return $res;
 //		return "匹配到的網址：<br>".$keep[0];
 //		articleFatch($result[0],$res);
 	//	return $res;
@@ -54,10 +57,13 @@ function match($ans,$info){
 		if(mysqli_num_rows($result)){
 			//$res="kk";
 			$result=mysqli_fetch_array($result);
+			$result[0]=preg_replace('/www.ptt.cc./','www.ptt.cc',$result[0]);
 			articleFatch($result[0],$res);
-			return "匹配到的網址：<br>".$result[0]."<br>內容如下<br>".$res."<br><br><br>";
+			$res="關於這個問題的回答如下：<br>".$res."<br>(";
+			$res=$res."<a href=\""."https://".$result[0]."\" target=\"_new\" >想了解更多請點此</a>)<br><br>";
+			return $res;
 		}
-		return "抱歉，我還無法解決您的問題<br>";
+		return "抱歉，我還無法回答您的問題<br>";
 	}
 }
 

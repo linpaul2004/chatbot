@@ -15,14 +15,16 @@ function articleFatch($url,&$res){
 	//$res="ggg";
 	
 	for($i=0;$i<$cou;$i++){
-		if(ereg('作者',$html_a[$i])==1){
+		if(strpos($html_a[$i],'作者')!==false){
 			//$res="cc";
 			$i++;
-			while(ereg('發信站: 批踢踢實業坊',$html_a[$i])!=1){
+			while(strpos($html_a[$i],'發信站: 批踢踢實業坊')==false){
 				//$res='dd';
 				//$line= preg_replace('/^\s\s*/i', '', $html_a[$i]);  //delet unuseful
 				//$line=preg_replace('<.*>', '', $line);
-				$res=$res.$html_a[$i];
+				if(strpos($html_a[$i],'span')==false){
+					$res=$res.'<br>'.$html_a[$i];
+				}
 				$i++;				
 			}
 			break;
