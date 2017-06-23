@@ -86,7 +86,7 @@ function placeAcquire($input,&$ans,&$info){
 	//echo "pi ";
 	if($info["nowState"]=="waitPlace"){
 		$info["place"][0]=getPlace($input);
-		if($info["place"][0]!=""){
+		if($info["place"][0]!=""){ 
 			pushInfoStack('place',$info['place'][0],$info);
 			$info['placeNum']++;
 			$info["nowState"]="";
@@ -95,6 +95,7 @@ function placeAcquire($input,&$ans,&$info){
 		else{
 			$info["nowState"]="waitPlace2";	
 		}
+		return 1;
 	}
 	if($info["nowState"]=="waitPlace21"){
 		$info["place"][0]=$input;
@@ -106,7 +107,6 @@ function placeAcquire($input,&$ans,&$info){
 	if($info["placeNum"]==0){
 		if($info["eventNum"]!=0){
 			$ans="請問在哪裡".$info["event"][0]."呢?";
-
 		}
 		else{
 			$ans="請問您說的地點是哪裡?";
@@ -122,7 +122,6 @@ function placeAcquire($input,&$ans,&$info){
 	}
 	//echo "pe";
 	return 1;
-
 }
 
 function eventAcquire($input,&$ans,&$info){
