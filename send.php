@@ -13,7 +13,7 @@ if(isset($_SESSION['record'])==false){
   $_SESSION['record']=array();
 }
 $sentence=urldecode($_POST['string']);
-$response="你說的我聽不太懂ㄟ";
+$response="你說的我聽不太懂ㄟ，可以再說一次嗎";
 
 
 ///////data load
@@ -150,30 +150,33 @@ else if(($info['eventNum']<=0)||($info['placeNum']<=0)||($info['objNum']<=0)||($
 // echo "pn: ".$info['placeNum']."\n";
 // echo "on: ".$info['objNum']."\n";
 // echo "tn: ".$info['timeNum']."\n";
-if($info["nowState"]=="needAskClear"){
-  $response="要保留資訊嗎? yes or no";
-  $info["nowState"]="waitClear";
-}
+// if($info["nowState"]=="needAskClear"){
+//   $response="要保留資訊嗎? yes or no";
+//   $info["nowState"]="waitClear";
+// }
 
-else if ($info["nowState"]=="waitClear"){
-    if($sentence=="yes"){
-      clearQuestionInfo($info);
-      $response="保留資訊";
-      $info["nowState"]="";
-    }
-    else if($sentence=="no"){
+// else if ($info["nowState"]=="waitClear"){
+//     if($sentence=="yes"){
+//       clearQuestionInfo($info);
+//       $response="保留資訊";
+//       $info["nowState"]="";
+//     }
+//     else if($sentence=="no"){
+//       clearQuestionInfo($info);
+//       clearInfoStack($info);
+//       $response="好的，請問還有什麼問題要問嗎？";
+//        $info["nowState"]="";
+//     }
+// }
+
+//else
+ if(!(($info['eventNum']<=0)||($info['placeNum']<=0)||($info['objNum']<=0)||($info['timeNum']<=0))){
+  $response=match($ans,$info);
       clearQuestionInfo($info);
       clearInfoStack($info);
-      $response="好的，請問還有什麼問題要問嗎？";
-       $info["nowState"]="";
-    }
-}
-
-else if(!(($info['eventNum']<=0)||($info['placeNum']<=0)||($info['objNum']<=0)||($info['timeNum']<=0))){
-  $response=match($ans,$info);
-  $info["nowState"]="needAskClear"; 
-  $response=$response."\n"."要保留資訊嗎? yes or no";
-  $info["nowState"]="waitClear";
+  //$response=$response."\n"."要保留資訊嗎? yes or no";
+  //$info["nowState"]="waitClear";
+      $info["nowState"]="";
 }
 
 if($sentence=="你好" ){
