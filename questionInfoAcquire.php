@@ -190,7 +190,7 @@ function objectAcquire($input,&$ans,&$info){
 			$ans=$ans."跟誰";
 			if($info["placeNum"]!=0){$ans=$ans."在".$info["place"][0];}
 			if($info['eventNum']!=0){$ans=$ans.$info["event"][0];}
-			$info["nowState"]="waitObj";
+			
 			if($info["nowState"]=="waitObj2"){
 				$info["nowState"]="waitObj21";
 				$ans="不好意思再問一次是".$ans;
@@ -198,6 +198,7 @@ function objectAcquire($input,&$ans,&$info){
 			else{
 				$info["nowState"]="waitObj";
 			}
+
 			return 0;
 	}
 	$v=seg($info["obj"][0]);
